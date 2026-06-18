@@ -1,0 +1,52 @@
+To run a MySQL container on port 3307, detached mod, accessible through terminal, with local volume.
+
+```
+podman run --detach --tty --name orderdb -p 3307:3306 -v ~/mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD='verysecretpass' -e MYSQL_DATABASE=order mysql:latest
+```
+
+Login into the container and enter mysql:
+```
+podman exec -it orderdb /bin/bash
+mysql -uroot -pverysecretpass
+```
+
+Delete orderdb container
+```
+podman rm -f -v orderdb
+```
+
+In this case, the data source URL is:
+
+```
+root:verysecretpass@tcp(127.0.0.1:3306)/order
+```
+
+To run the Order service application, you can use the following:
+
+```
+DATA_SOURCE_URL=root:verysecretpass@tcp(127.0.0.1:3306)/order \
+APPLICATION_PORT=3000 \
+ENV=development \
+go run cmd/main.go
+```
+
+Login into the orderdb container
+```bash
+podman exec -it orderdb /bin/bash
+```
+
+Show logs from orderdb
+```bash
+podman logs orderdb --tail 80
+```
+
+Run queries from host:
+
+```bash
+docker exec orderdb mysql -uroot -pverysecretpass -e 'SELECT 1;'
+```
+
+Check TCP services for port 3306 in your machine:
+```bash
+lsof -nP -iTCP:3306 -sTCP:LISTEN
+```
