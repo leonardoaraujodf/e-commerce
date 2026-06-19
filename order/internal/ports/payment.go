@@ -2,6 +2,6 @@ package ports
 
 import "github.com/leonardoaraujodf/e-commerce/order/internal/application/core/domain"
 
-type APIPort interface {
-	PlaceOrder(order domain.Order) (domain.Order, error)
+type PaymentPort interface {
+	Charge(*domain.Order) error
 }

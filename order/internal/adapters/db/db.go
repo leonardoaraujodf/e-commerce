@@ -3,7 +3,7 @@ package db
 import (
 	"fmt"
 
-	"github.com/leonardoaraujodf/e-commerce/order/internal/application/domain"
+	"github.com/leonardoaraujodf/e-commerce/order/internal/application/core/domain"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

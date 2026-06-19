@@ -50,3 +50,9 @@ Check TCP services for port 3306 in your machine:
 ```bash
 lsof -nP -iTCP:3306 -sTCP:LISTEN
 ```
+
+## Calling a gRPC endpoint
+
+```sh
+grpcurl -d '{"user_id": 123, "order_items": [{"product_code": "prod", "quantity":4, "unit_price":12}]}' -plaintext localhost:3000 Order/Create
+```

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/leonardoaraujodf/e-commerce.proto/golang/order"
-	"github.com/leonardoaraujodf/e-commerce/order/internal/application/domain"
+	"github.com/leonardoaraujodf/e-commerce/order/internal/application/core/domain"
 )
 
 func (a Adapter) Create(ctx context.Context, request *order.CreateOrderRequest) (*order.CreateOrderResponse, error) {
