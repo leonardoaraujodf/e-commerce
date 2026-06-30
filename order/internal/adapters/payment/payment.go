@@ -10,6 +10,7 @@ import (
 )
 
 type Adapter struct {
+	conn    *grpc.ClientConn
 	payment payment.PaymentClient
 }
 
@@ -21,9 +22,12 @@ func NewAdapter(paymentServiceUrl string) (*Adapter, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer conn.Close()
 	client := payment.NewPaymentClient(conn)
-	return &Adapter{payment: client}, nil
+	return &Adapter{conn: conn, payment: client}, nil
+}
+
+func (a *Adapter) Close() error {
+	return a.conn.Close()
 }
 
 func (a *Adapter) Charge(order *domain.Order) error {

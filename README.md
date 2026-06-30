@@ -18,15 +18,25 @@ podman rm -f -v orderdb
 In this case, the data source URL is:
 
 ```
-root:verysecretpass@tcp(127.0.0.1:3306)/order
+root:verysecretpass@tcp(127.0.0.1:3307)/order
+```
+To run the payment service application, inside of payment folder, use the following:
+
+```sh
+DB_DRIVER=mysql \
+DATA_SOURCE_URL=root:verysecretpass@tcp(127.0.0.1:3307)/payment \
+APPLICATION_PORT=3001 \
+ENV=development \
+go run cmd/main.go
 ```
 
 To run the Order service application, you can use the following:
-
-```
-DATA_SOURCE_URL=root:verysecretpass@tcp(127.0.0.1:3306)/order \
+```sh
+DB_DRIVER=mysql \
+DATA_SOURCE_URL=root:verysecretpass@tcp(127.0.0.1:3307)/order \
 APPLICATION_PORT=3000 \
 ENV=development \
+PAYMENT_SERVICE_URL=localhost:3001 \
 go run cmd/main.go
 ```
 
